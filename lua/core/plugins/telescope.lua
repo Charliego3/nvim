@@ -39,15 +39,16 @@ local opts = {
             "--hidden",
             "--glob=!.git/",
         },
-        -- pickers = {
-
-        -- },
-        file_ignore_pattern = {
+        file_ignore_patterns = {
             ".git/",
             ".idea/",
             ".settings/",
+            ".vscode/",
+            "node_modules/",
             "target/",
             "*.iml",
+            "%.zip",
+            "%.class",
         },
         path_display = {
             shorten = {
