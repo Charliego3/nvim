@@ -18,6 +18,9 @@ local hide_in_width = function()
 end
 
 local warp = function (str)
+    if str == "" then
+        return str
+    end
     return '[' .. str .. ']'
 end
 
@@ -46,6 +49,16 @@ local opts = {
                 separator = { right = '' },
                 color = { gui = "bold" },
             },
+            -- {
+            --     "windows",
+            --     color = { bg = colors.orange, fg = colors.cyan },
+            --     separator = { right = '' },
+            -- },
+            --[[ {
+                "tabs",
+                color = { bg = colors.orange, fg = colors.cyan },
+                separator = { right = '' },
+            } ]]
         },
         lualine_c = {
             {
@@ -53,7 +66,7 @@ local opts = {
                 fmt = warp,
                 color = { fg = colors.white, gui = "bold" },
                 cond = nil,
-                padding = { left = 2 }
+                padding = { left = 2, right = 2, }
             },
             {
                 "diff",
@@ -81,6 +94,7 @@ local opts = {
                     hint = icons.diagnostics.BoldHint .. " ",
                 },
                 cond = hide_in_width,
+                padding = { left = 2, right = 2 },
             },
         },
         lualine_x = {
@@ -88,16 +102,17 @@ local opts = {
             {
                 function()
                     local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
-                    return '[' .. icons.ui.Tab .. " " .. shiftwidth .. ']'
+                    return icons.ui.Tab .. " " .. shiftwidth
                 end,
-                padding = { right = 2 },
+                fmt = warp,
+                padding = { left = 2, right = 1 },
                 color = { fg = colors.white, gui = 'bold' }
             },
             {
                 "filetype",
                 fmt = warp,
                 separator = { left = '[', right = ']' },
-                padding = { right = 2 },
+                padding = { left = 1, right = 1 },
                 color = { fg = colors.white, gui = 'bold' },
             },
             {
@@ -107,7 +122,12 @@ local opts = {
                 end,
                 color = { fg = colors.white, gui = 'bold' },
                 cond = hide_in_width,
-                padding = { right = 2 },
+                padding = { left = 1, right = 1 },
+            },
+            {
+                "filesize",
+                fmt = warp,
+                padding = { left = 1, right = 1 },
             },
             {
                 function()
@@ -119,8 +139,17 @@ local opts = {
                     return { fg = ts and not vim.tbl_isempty(ts) and colors.green or colors.red }
                 end,
                 cond = hide_in_width,
-                padding = { right = 2 }
+                padding = { left = 1, right = 1 },
+            },
+            {
+                "fileformat",
+                padding = { left = 1, right = 2 },
             }
+        },
+        lualine_y ={
+            {
+                "progress",
+            },
         },
         lualine_z = {
             {
