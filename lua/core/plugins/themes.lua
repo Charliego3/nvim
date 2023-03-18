@@ -1,6 +1,6 @@
 local M = {}
 local colors = require("core.colors")
-local schema = "tokyonight-night"
+local schema = "catppuccin"
 
 M.bubbles_theme = {
     normal = {
@@ -21,12 +21,32 @@ M.bubbles_theme = {
     },
 }
 
+local setupBlankline = function ()
+    vim.cmd([[
+        augroup illuminate_augroup
+            autocmd!
+            autocmd VimEnter * hi link illuminatedWord CursorLine
+        augroup END
+
+        augroup illuminate_augroup
+        autocmd!
+            autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
+        augroup END
+
+        augroup illuminate_augroup
+            autocmd!
+            autocmd VimEnter * hi illuminatedCurWord cterm=italic gui=italic
+        augroup END
+    ]])
+end
+
 M.setupTokyoDark = function()
     local g = vim.g
     g.tokyodark_transparent_background = false
     g.tokyodark_enable_italic_comment = true
     g.tokyodark_enable_italic = true
     g.tokyodark_color_gamma = "1.0"
+    setupBlankline()
     vim.cmd("colorscheme tokyodark")
 end
 
@@ -70,22 +90,6 @@ M.setupTokyoNight = function()
             highlights.IlluminatedWordWrite = { style = "underline" }
         end,
     })
-    vim.cmd([[
-        augroup illuminate_augroup
-            autocmd!
-            autocmd VimEnter * hi link illuminatedWord CursorLine
-        augroup END
-
-        augroup illuminate_augroup
-        autocmd!
-            autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
-        augroup END
-
-        augroup illuminate_augroup
-            autocmd!
-            autocmd VimEnter * hi illuminatedCurWord cterm=italic gui=italic
-        augroup END
-    ]])
     vim.cmd("colorscheme tokyonight-night")
 end
 
@@ -94,11 +98,64 @@ M.tokyoNightEnabled = function()
 end
 
 M.setupOnedarker = function()
+    setupBlankline()
     vim.cmd("colorscheme onedarker")
 end
 
 M.onedarkerEnabled = function()
     return schema == "onedarker"
+end
+
+M.setupCatppuccin = function()
+    require("catppuccin").setup({
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        background = {
+            -- :h background
+            light = "latte",
+            dark = "mocha",
+        },
+        transparent_background = false,
+        show_end_of_buffer = false, -- show the '~' characters after the end of buffers
+        term_colors = false,
+        dim_inactive = {
+            enabled = false,
+            shade = "dark",
+            percentage = 0.15,
+        },
+        no_italic = false, -- Force no italic
+        no_bold = false, -- Force no bold
+        styles = {
+            comments = { "italic" },
+            conditionals = { "italic" },
+            loops = {},
+            functions = { "bold", "italic" },
+            keywords = { "bold" },
+            strings = {},
+            variables = {},
+            numbers = {},
+            booleans = {},
+            properties = {},
+            types = {},
+            operators = {},
+        },
+        color_overrides = {},
+        custom_highlights = {},
+        integrations = {
+            cmp = true,
+            gitsigns = true,
+            nvimtree = true,
+            telescope = true,
+            notify = false,
+            mini = false,
+            -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+        },
+    })
+    setupBlankline()
+    vim.cmd("colorscheme catppuccin")
+end
+
+M.catppuccinEnabled = function()
+    return schema == "catppuccin"
 end
 
 return M

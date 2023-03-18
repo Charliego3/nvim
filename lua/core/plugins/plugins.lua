@@ -19,6 +19,7 @@ local plugins = {
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.1",
 		dependencies = { "nvim-lua/plenary.nvim" },
+        config = require("core.plugins.telescope").setup,
 	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
@@ -26,23 +27,8 @@ local plugins = {
 		build = "make",
 	},
 	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons", lazy = true },
-	},
-	{
-		"tiagovla/tokyodark.nvim",
-		config = require("core.plugins.themes").setupTokyoDark,
-		enabled = require("core.plugins.themes").tokyoDarkEnabled(),
-	},
-	{
-		"folke/tokyonight.nvim",
-		config = require("core.plugins.themes").setupTokyoNight,
-		enabled = require("core.plugins.themes").tokyoNightEnabled(),
-		dependencies = "neovim/nvim-lspconfig",
-	},
-	{
 		"nvim-treesitter/nvim-treesitter",
-		-- run = ':TSUpdate',
+		build = ":TSUpdate",
 		config = require("core.plugins.treesitter").setup,
 	},
 	{
@@ -56,19 +42,7 @@ local plugins = {
 		"folke/which-key.nvim",
 		config = require("core.plugins.whichkey").setup,
 	},
-	{ "rcarriga/nvim-notify" },
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = "kyazdani42/nvim-web-devicons",
-		config = require("core.plugins.bufferline").setup,
-	},
-	{
-		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
-	},
-	{ "nvim-lua/popup.nvim" },
+
 	-- Lsp Configuration
 	{
 		"VonHeikemen/lsp-zero.nvim",
@@ -105,37 +79,7 @@ local plugins = {
 			require("core.plugins.nullls")
 		end,
 	},
-	-- Comments
-	{
-		"numToStr/Comment.nvim",
-		event = "BufRead",
-		config = function()
-			require("core.plugins.comment")
-		end,
-	},
-	-- gitsigns
-	{
-		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("core.plugins.gitsigns")
-		end,
-		event = "BufRead",
-	},
-	-- project.nvim
-	{
-		"ahmedkhalf/project.nvim",
-		config = function()
-			require("core.plugins.project")
-		end,
-	},
-	-- breadcrumbs
-	{
-		"SmiteshP/nvim-navic",
-		config = function()
-			require("core.plugins.breadcrumbs")
-		end,
-	},
-	{ "JoosepAlviste/nvim-ts-context-commentstring" },
+
 	-- Debugging
 	--[[ {
 		"mfussenegger/nvim-dap",
@@ -152,6 +96,42 @@ local plugins = {
 			require("lvim.core.dap").setup_ui()
 		end,
 	}, ]]
+
+	-- Comments
+	{
+		"numToStr/Comment.nvim",
+		event = "BufRead",
+		config = function()
+			require("core.plugins.comment")
+		end,
+	},
+
+	-- gitsigns
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("core.plugins.gitsigns")
+		end,
+		event = "BufRead",
+	},
+
+	-- project.nvim
+	{
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("core.plugins.project")
+		end,
+	},
+
+	-- breadcrumbs
+	{
+		"SmiteshP/nvim-navic",
+		config = function()
+			require("core.plugins.breadcrumbs")
+		end,
+	},
+	{ "JoosepAlviste/nvim-ts-context-commentstring" },
+
 	-- Terminal
 	{
 		"akinsho/toggleterm.nvim",
@@ -172,6 +152,7 @@ local plugins = {
 			require("core.plugins.illuminate")
 		end,
 	},
+
 	-- adds indentation guides to all lines
 	{
 		"lukas-reineke/indent-blankline.nvim",
@@ -179,11 +160,51 @@ local plugins = {
 			require("core.plugins.blankline")
 		end,
 	},
+
+	-- Themes
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "kyazdani42/nvim-web-devicons", lazy = true },
+        config = function ()
+            require("core.plugins.lualine")
+        end
+	},
+	{
+		"tiagovla/tokyodark.nvim",
+		config = require("core.plugins.themes").setupTokyoDark,
+		enabled = require("core.plugins.themes").tokyoDarkEnabled(),
+	},
+	{
+		"folke/tokyonight.nvim",
+		config = require("core.plugins.themes").setupTokyoNight,
+		enabled = require("core.plugins.themes").tokyoNightEnabled(),
+		dependencies = "neovim/nvim-lspconfig",
+	},
 	{
 		"lunarvim/onedarker.nvim",
 		branch = "freeze",
+		config = require("core.plugins.themes").setupOnedarker,
 		enabled = require("core.plugins.themes").onedarkerEnabled(),
 	},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		config = require("core.plugins.themes").setupCatppuccin,
+		enabled = require("core.plugins.themes").catppuccinEnabled(),
+	},
+	{
+		"akinsho/bufferline.nvim",
+		dependencies = "kyazdani42/nvim-web-devicons",
+		config = require("core.plugins.bufferline").setup,
+	},
+	{
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	},
+	{ "rcarriga/nvim-notify" },
+	{ "nvim-lua/popup.nvim" },
 }
 
 return plugins

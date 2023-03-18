@@ -34,5 +34,3 @@ local opts = {
 
 local plugins = require("core.plugins.plugins")
 require("lazy").setup(plugins, opts)
-require("core.plugins.telescope").setup()
-require("core.plugins.lualine")

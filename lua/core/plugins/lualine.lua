@@ -49,11 +49,11 @@ local opts = {
                 separator = { right = '' },
                 color = { gui = "bold" },
             },
-            -- {
-            --     "windows",
-            --     color = { bg = colors.orange, fg = colors.cyan },
-            --     separator = { right = '' },
-            -- },
+            --[[ {
+                "windows",
+                color = { bg = colors.orange, fg = colors.cyan },
+                separator = { right = '' },
+            }, ]]
             --[[ {
                 "tabs",
                 color = { bg = colors.orange, fg = colors.cyan },
