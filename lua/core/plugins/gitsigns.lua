@@ -33,8 +33,8 @@ require("gitsigns").setup({
 			linehl = "GitSignsChangeLn",
 		},
 	},
-	numhl = false,
-	linehl = false,
+	numhl = true,
+	linehl = true,
 	keymaps = {
 		-- Default keymap options
 		noremap = true,

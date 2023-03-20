@@ -28,7 +28,7 @@ vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", opts)
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
 vim.keymap.set("n", "]q", ":cnext<CR>", opts)
 vim.keymap.set("n", "[q", ":cprev<CR>", opts)
-vim.keymap.set("n", "<C-q>", ":call QuickFixToggle()<CR>", opts)
+vim.keymap.set("n", "<C-q>", ":q<CR>", opts)
 vim.keymap.set("n", "<C-s>", ":w<CR>", opts)
 -- navigation on nomal mode
 vim.keymap.set("n", "<", "v<gv", opts)

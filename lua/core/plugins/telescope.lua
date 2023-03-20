@@ -57,7 +57,7 @@ local function getOpts(actions)
                 },
             },
             winblend = 0,
-            border = {},
+            border = true,
             borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
             dynamic_preview_title = true,
             set_env = {
@@ -76,20 +76,20 @@ local function getOpts(actions)
                 show_untracked = true,
             },
             lsp_references = {
-                theme = "dropdown",
-                initial_mode = "normal",
+                -- theme = "dropdown",
+                initial_mode = "insert",
             },
             lsp_definitions = {
-                theme = "dropdown",
-                initial_mode = "normal",
+                -- theme = "dropdown",
+                initial_mode = "insert",
             },
             lsp_declarations = {
                 theme = "dropdown",
-                initial_mode = "normal",
+                initial_mode = "insert",
             },
             lsp_implementations = {
                 theme = "dropdown",
-                initial_mode = "normal",
+                initial_mode = "insert",
             },
             find_files = {
                 -- theme = "dropdown",
