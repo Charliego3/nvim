@@ -93,6 +93,7 @@ require("barbecue").setup({
 	---@alias barbecue.Config.theme
 	---|'"auto"' # Use your current colorscheme's theme or generate a theme based on it.
 	---|string # Theme located under `barbecue.theme` module.
+    ---@diagnostic disable-next-line: undefined-doc-name
 	---|barbecue.Theme # Same as '"auto"' but override it with the given table.
 	---
 	---Theme to be used for generating highlight groups dynamically.
