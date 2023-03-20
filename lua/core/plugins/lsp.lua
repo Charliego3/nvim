@@ -18,19 +18,6 @@ lsp.preset({
     },
 })
 
---[[ local cmp = require("cmp")
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-    ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-    ["<C-Space>"] = cmp.mapping.complete(),
-}) ]]
-
---[[ lsp.setup_nvim_cmp({
-    mapping = cmp_mappings,
-}) ]]
-
 lsp.on_attach(function(_, bufnr)
     local opts = { buffer = bufnr, remap = false }
 
@@ -82,18 +69,18 @@ vim.diagnostic.config({
     },
 })
 
-require("nvim-navic").setup()
+lsp.nvim_workspace() -- (Optional) Configure lua language server for neovim
+lsp.setup()
+
 local lspconfig = require("lspconfig")
 local masonlsp = require("mason-lspconfig")
-require("core.plugins.mason").setup()
+require("core.plugins.mason")
+require("core.plugins.luasnip")
+require("core.plugins.cmp")
+
 masonlsp.setup()
 masonlsp.setup_handlers({
     function(server_name)
         lspconfig[server_name].setup({})
     end,
 })
-require("core.plugins.luasnip")
-require("core.plugins.cmp").setup()
-
-lsp.nvim_workspace() -- (Optional) Configure lua language server for neovim
-lsp.setup()

@@ -1,10 +1,3 @@
-local M = {}
--- local datapath = os.getenv('XDG_DATA_HOME') .. '/mason/bin'
--- if not vim.env.PATH:match(datapath) then
---     local string_separator = vim.loop.os_uname().version:match "Windows" and ";" or ":"
---     vim.env.PATH = vim.env.PATH .. string_separator .. datapath
--- end
-
 local opts = {
     ui = {
         border = 'rounded',
@@ -32,8 +25,4 @@ local opts = {
     }
 }
 
-M.setup = function()
-    require("mason").setup(opts)
-end
-
-return M
+require("mason").setup(opts)

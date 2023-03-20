@@ -47,7 +47,7 @@ local plugins = {
     -- Lsp Configuration
     {
         "VonHeikemen/lsp-zero.nvim",
-        branch = "v1.x",
+        branch = "v2.x",
         dependencies = {
             -- LSP Support
             { "neovim/nvim-lspconfig" },    -- Required
@@ -65,6 +65,13 @@ local plugins = {
             -- Snippets
             { "L3MON4D3/LuaSnip" },    -- Required
             { "rafamadriz/friendly-snippets" }, -- Optional
+
+            { "hrsh7th/cmp-vsnip" },
+            { "hrsh7th/vim-vsnip" },
+            { "dcampos/nvim-snippy" },
+            { "dcampos/cmp-snippy" },
+            { "SirVer/ultisnips" },
+            { "quangnguyen30192/cmp-nvim-ultisnips" },
         },
         config = function()
             require("core.plugins.lsp")
