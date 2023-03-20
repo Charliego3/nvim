@@ -200,8 +200,6 @@ require("nvim-tree").setup({
     api.events.subscribe(events.FileCreated, function (data)
         vim.notify('File created: ' .. data.fname, vim.log.levels.INFO, { title = 'File was created' })
     end) ]]
-vim.cmd("highlight NvimTreeFolderIcon guifg=#DFAF67")
-vim.cmd("highlight NvimTreeOpenedFolderIcon guifg=#61DEAF")
 
 local open_nvim_tree = function(data)
 	-- buffer is a directory
