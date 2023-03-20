@@ -225,12 +225,6 @@ local plugins = {
     },
 
     -- breadcrumbs
-    --[[ {
-        "SmiteshP/nvim-navic",
-        config = function()
-            require("core.plugins.breadcrumbs")
-        end,
-    }, ]]
     {
         "utilyre/barbecue.nvim",
         name = "barbecue",
