@@ -1,10 +1,12 @@
 local icons = require("core.icons")
 local cmp = require("cmp")
 local luasnip = require("luasnip")
-require("cmp_nvim_ultisnips").setup{}
+local compare = cmp.config.compare
+require("cmp_nvim_ultisnips").setup({})
 
 local has_words_before = function()
     ---@diagnostic disable-next-line: deprecated
+    local unpack = unpack or table.unpack
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
@@ -102,6 +104,8 @@ local sourcenames = {
     cmp_tabnine = "(Tabnine)",
     vsnip = "(Snippet)",
     luasnip = "(Snippet)",
+    snippy = "(Snippet)",
+    ultisnips = "(Snippet)",
     buffer = "(Buffer)",
     tmux = "(TMUX)",
     copilot = "(Copilot)",
@@ -121,23 +125,15 @@ local confirmopts = {
 }
 
 cmp.setup({
-    active = true,
-    --[[ enabled = function()
-        local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-        if buftype == "prompt" then
-            return false
-        end
-        return true
-    end, ]]
     enabled = true,
     confirm_opts = confirmopts,
+    -- preselect = "always",
     completion = {
         enabled = true,
-        ---@usage The minimum length of a word to complete on.
-        keyword_length = 1,
+        -- completeopt = "menu,menuone,noinsert",
     },
     experimental = {
-        ghost_text = false,
+        ghost_text = true,
         native_menu = false,
     },
     formatting = {
@@ -240,19 +236,24 @@ cmp.setup({
             end,
         }, ]]
 
+        { name = "buffer" },
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "luasnip" },
-        { name = 'snippy' },
+        { name = "snippy" },
         { name = "ultisnips" },
         { name = "cmp_tabnine" },
         { name = "nvim_lua" },
-        { name = "buffer" },
         { name = "calc" },
         { name = "emoji" },
         { name = "treesitter" },
         { name = "crates" },
         { name = "tmux" },
+    },
+    sortting = {
+        comparators = {
+            compare.offset,
+        },
     },
     mapping = cmp.mapping.preset.insert({
         ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
@@ -279,8 +280,8 @@ cmp.setup({
             elseif jumpable(1) then
                 luasnip.jump(1)
             elseif has_words_before() then
-                -- cmp.complete()
-                fallback()
+                cmp.complete()
+                -- fallback()
             else
                 fallback()
             end
@@ -330,3 +331,95 @@ cmp.setup({
         },
     },
 })
+
+vim.diagnostic.config({
+    virtual_text = {
+        source = "always",
+        prefix = "■",
+    },
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+    severity_sort = false,
+    float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = { "always" },
+        header = "",
+        prefix = "",
+    },
+})
+
+local lspconfig = require("lspconfig")
+local masonlsp = require("mason-lspconfig")
+require("core.plugins.mason")
+require("core.plugins.luasnip")
+
+masonlsp.setup()
+masonlsp.setup_handlers({
+    function(server_name)
+        lspconfig[server_name].setup({})
+    end,
+})
+
+local signature = require("lsp_signature")
+signature.setup({
+    bind = true,
+    handler_opts = {
+        border = "rounded",
+    },
+    floating_window = true,
+    hint_enable = true,
+    hint_prefix = "📌 ",
+    hint_scheme = "String",
+    hi_parameter = "LspSignatureActiveParameter",
+    zindex = 2000,
+    padding = "",
+})
+
+local signs = {
+    Error = icons.diagnostics.BoldError,
+    Warn = icons.diagnostics.BoldWarning,
+    Hint = icons.diagnostics.BoldHint,
+    Info = icons.diagnostics.BoldInformation,
+}
+
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+--[[ local function goto_definition(split_cmd)
+  local util = vim.lsp.util
+  local log = require("vim.lsp.log")
+  local api = vim.api
+
+  -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
+  local handler = function(_, result, ctx)
+    if result == nil or vim.tbl_isempty(result) then
+      local _ = log.info() and log.info(ctx.method, "No location found")
+      return nil
+    end
+
+    if split_cmd then
+      vim.cmd(split_cmd)
+    end
+
+    if vim.tbl_islist(result) then
+      util.jump_to_location(result[1])
+
+      if #result > 1 then
+        util.set_qflist(util.locations_to_items(result))
+        api.nvim_command("copen")
+        api.nvim_command("wincmd p")
+      end
+    else
+      util.jump_to_location(result)
+    end
+  end
+
+  return handler
+end
+
+vim.lsp.handlers["textDocument/definition"] = goto_definition('split') ]]

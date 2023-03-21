@@ -53,34 +53,13 @@ lsp.on_attach(function(_, bufnr)
     end, opts)
 end)
 
-vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-    underline = true,
-    severity_sort = true,
-    float = {
-        focusable = false,
-        style = "minimal",
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
-    },
-})
-
 lsp.nvim_workspace() -- (Optional) Configure lua language server for neovim
 lsp.setup()
 
-local lspconfig = require("lspconfig")
-local masonlsp = require("mason-lspconfig")
-require("core.plugins.mason")
-require("core.plugins.luasnip")
 require("core.plugins.cmp")
 
-masonlsp.setup()
-masonlsp.setup_handlers({
-    function(server_name)
-        lspconfig[server_name].setup({})
-    end,
-})
+-- You will likely want to reduce updatetime which affects CursorHold
+-- note: this setting is global and should be set only once
+-- vim.o.updatetime = 250
+-- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]

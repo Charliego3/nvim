@@ -16,7 +16,7 @@ local opts = {
         close_icon = '',
         left_trunc_marker = '',
         right_trunc_marker = '',
-        name_formatter = function (buf) -- buf contains
+        name_formatter = function (_) -- function (buf) -- buf contains
             -- name                | str        | the basename of the active file
             -- path                | str        | the full path of the active file
             -- bufnr (buffer only) | int        | the number of the active buffer
@@ -31,7 +31,7 @@ local opts = {
         diagnostics = 'nvim_lsp', -- false | "nvim_lsp" | "coc",
         diagnostics_update_in_insert = false,
         -- The diagnostics indicator can be set to nil to keep the buffer name highlight but delete the highlighting
-        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+        diagnostics_indicator = function(count, _, _, _) -- function(count, level, diagnostics_dict, context)
             return "(" .. count .. ")"
         end,
         -- NOTE: this will be called a lot so don't do any heavy processing here
@@ -89,7 +89,7 @@ local opts = {
 }
 
 M.setup = function ()
-   require("bufferline").setup(opts) 
+   require("bufferline").setup(opts)
 end
 
 return M

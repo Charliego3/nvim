@@ -72,11 +72,44 @@ local plugins = {
             { "dcampos/cmp-snippy" },
             { "SirVer/ultisnips" },
             { "quangnguyen30192/cmp-nvim-ultisnips" },
+            { "ray-x/lsp_signature.nvim" },
         },
         config = function()
             require("core.plugins.lsp")
         end,
     },
+    --[[ {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            -- LSP Support
+            { "neovim/nvim-lspconfig" },    -- Required
+            { "williamboman/mason.nvim" },  -- Optional
+            { "williamboman/mason-lspconfig.nvim" }, -- Optional
+
+            -- Autocompletion
+            -- { "hrsh7th/nvim-cmp" }, -- Required
+            { "hrsh7th/cmp-nvim-lsp" }, -- Required
+            { "hrsh7th/cmp-buffer" }, -- Optional
+            { "hrsh7th/cmp-path" }, -- Optional
+            { "saadparwaiz1/cmp_luasnip" }, -- Optional
+            { "hrsh7th/cmp-nvim-lua" }, -- Optional
+            { "ray-x/lsp_signature.nvim" },
+
+            -- Snippets
+            { "L3MON4D3/LuaSnip" },    -- Required
+            { "rafamadriz/friendly-snippets" }, -- Optional
+
+            { "hrsh7th/cmp-vsnip" },
+            { "hrsh7th/vim-vsnip" },
+            { "dcampos/nvim-snippy" },
+            { "dcampos/cmp-snippy" },
+            { "SirVer/ultisnips" },
+            { "quangnguyen30192/cmp-nvim-ultisnips" },
+        },
+        config = function ()
+            require("core.plugins.cmp")
+        end
+    }, ]]
     {
         "folke/neodev.nvim",
         module = "neodev",
@@ -173,6 +206,7 @@ local plugins = {
             require("nvim-autopairs").setup({})
         end,
     },
+    -- Standalone UI for nvim-lsp progress. Eye candy for the impatient.
     {
         "j-hui/fidget.nvim",
         config = function()
@@ -191,7 +225,6 @@ local plugins = {
         end,
     },
     { "romgrk/fzy-lua-native" },
-    { "nixprime/cpsm" },
 
     -- gitsigns
     {
